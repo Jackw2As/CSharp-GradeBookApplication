@@ -26,41 +26,23 @@ namespace GradeBook.GradeBooks
 
         private char CalculateLetterGrade(double averageGrade)
         {
-            SortedDictionary<int, double> Grades = new SortedDictionary<int, double>();
-            foreach (var student in Students)
-            {
-                student.Grades.ForEach(s => Grades.Add(int.Parse(s.ToString()), s));
-            }
+            var grades = Students.OrderByDescending(e => e.AverageGrade).Select(e => e.AverageGrade).ToArray();
 
-            int TotalNumberofGrades = Grades.Values.Count;
+            int gradesCount = grades.Count();
 
-            int splitter = TotalNumberofGrades / 5; //This returns value at 20%
+            int threshold = (int)Math.Ceiling(gradesCount * 0.2); //This returns value at 20%
 
-            if (averageGrade >= Grades.Values.ElementAt(splitter))
-            {
-                return 'A';
-            }
 
-            splitter += TotalNumberofGrades / 5; //This returns value at 40%
+            if (averageGrade >= grades[threshold - 1]) return 'A';
 
-            if (averageGrade >= Grades.Values.ElementAt(splitter))
-            {
-                return 'B';
-            }
+            threshold += gradesCount / 5; //This returns value at 40%
+            if (averageGrade >= grades[threshold * 2 - 1]) return 'B';
 
-            splitter += TotalNumberofGrades / 5; //This returns value at 60%
+            threshold += gradesCount / 5; //This returns value at 60%
+            if (averageGrade >= grades[threshold * 3 - 1])  return 'C';
 
-            if (averageGrade >= Grades.Values.ElementAt(splitter))
-            {
-                return 'C';
-            }
-
-            splitter += TotalNumberofGrades / 5; //This returns value at 80%
-
-            if (averageGrade >= Grades.Values.ElementAt(splitter))
-            {
-                return 'D';
-            }
+            threshold += gradesCount / 5; //This returns value at 80%
+            if (averageGrade >= grades[threshold * 4 - 1]) return 'D';
 
             return 'F';
         }
