@@ -36,13 +36,13 @@ namespace GradeBook.GradeBooks
             if (averageGrade >= grades[threshold - 1]) return 'A';
 
             threshold += gradesCount / 5; //This returns value at 40%
-            if (averageGrade >= grades[threshold * 2 - 1]) return 'B';
+            if (averageGrade >= grades[(threshold * 2) - 1]) return 'B';
 
             threshold += gradesCount / 5; //This returns value at 60%
-            if (averageGrade >= grades[threshold * 3 - 1])  return 'C';
+            if (averageGrade >= grades[(threshold * 3) - 1])  return 'C';
 
             threshold += gradesCount / 5; //This returns value at 80%
-            if (averageGrade >= grades[threshold * 4 - 1]) return 'D';
+            if (averageGrade >= grades[(threshold * 4) - 1]) return 'D';
 
             return 'F';
         }
